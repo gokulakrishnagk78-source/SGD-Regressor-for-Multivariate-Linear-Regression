@@ -8,10 +8,10 @@ To write a program to predict the price of the house and number of occupants in 
 2. Anaconda – Python 3.7 Installation / Jupyter notebook
 
 ## Algorithm
-1. 
-2. 
-3. 
-4. 
+Load the California housing dataset and select input and output variables.
+Split the dataset into training and testing data, then standardize the values.
+Train the Multi-Output SGD Regression model using the training data.
+Predict the output for test data and display the predicted values.
 
 ## Program:
 ```

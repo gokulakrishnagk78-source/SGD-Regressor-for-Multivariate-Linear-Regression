@@ -32,23 +32,19 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error
 from sklearn.preprocessing import StandardScaler
 
-# Load the California Housing dataset
+
 data = fetch_california_housing()
 
-# Select the first 3 features as input
+
 X = data.data[:, :3]
 
-# Select two target variables:
-# 1. Median House Value (target)
-# 2. Latitude (7th column)
 y = np.column_stack((data.target, data.data[:, 6]))
 
-# Split the dataset into training and testing sets
+
 X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.2, random_state=42
 )
 
-# Feature Scaling
 scaler_x = StandardScaler()
 scaler_y = StandardScaler()
 
@@ -58,31 +54,29 @@ X_test = scaler_x.transform(X_test)
 y_train = scaler_y.fit_transform(y_train)
 y_test = scaler_y.transform(y_test)
 
-# Create SGD Regressor model
 sgd = SGDRegressor(max_iter=1000, tol=1e-6, random_state=42)
 
-# Multi-output Regressor
+
 multi_output_sgd = MultiOutputRegressor(sgd)
 
-# Train the model
 multi_output_sgd.fit(X_train, y_train)
 
-# Predict on test data
+
 y_pred = multi_output_sgd.predict(X_test)
 
-# Convert predictions back to original scale
+
 y_pred = scaler_y.inverse_transform(y_pred)
 y_test = scaler_y.inverse_transform(y_test)
 
-# Display first 5 predictions
+
 print("First 5 Predictions:")
 print(y_pred[:5])
 
-# Calculate Mean Squared Error
+
 mse = mean_squared_error(y_test, y_pred)
 print("\nMean Squared Error:", mse)
 
-# Plot Actual vs Predicted for Median House Value
+
 plt.figure(figsize=(8, 6))
 plt.scatter(y_test[:, 0], y_pred[:, 0])
 plt.plot(
